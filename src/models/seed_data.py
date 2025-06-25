@@ -5,9 +5,14 @@ from datetime import datetime, date
 def seed_database():
     """Seed the database with sample data including Dallas Mill Station project"""
     
-    # Check if data already exists
-    if Project.query.first():
-        return  # Data already seeded
+    # Check if data already exists (with error handling for schema issues)
+    try:
+        if Project.query.first():
+            return  # Data already seeded
+    except Exception as e:
+        # Database schema might not be fully created yet, continue with seeding
+        print(f"Database schema check failed, proceeding with seeding: {e}")
+        pass
     
     # Create Clients
     polk_cdc = Client(
@@ -126,7 +131,8 @@ def seed_database():
         funding_gap=2500000,
         client_id=polk_cdc.id,
         sharepoint_site_url="https://polkcdc.sharepoint.com/sites/DallasMillStation",
-        sharepoint_email="dallasmill@polkcdc.org"
+        sharepoint_email="dallasmill@polkcdc.org",
+        sharepoint_group_id=None  # Will be populated when SharePoint site is created
     )
     
     sample_project = Project(
@@ -144,7 +150,8 @@ def seed_database():
         funding_gap=1800000,
         client_id=polk_cdc.id,
         sharepoint_site_url="https://polkcdc.sharepoint.com/sites/RiversideCommons",
-        sharepoint_email="riverside@polkcdc.org"
+        sharepoint_email="riverside@polkcdc.org",
+        sharepoint_group_id=None  # Will be populated when SharePoint site is created
     )
     
     db.session.add_all([dallas_mill, sample_project])

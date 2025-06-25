@@ -48,6 +48,7 @@ def get_projects():
                 } if project.client else None,
                 'sharepoint_site_url': project.sharepoint_site_url,
                 'sharepoint_email': project.sharepoint_email,
+                'sharepoint_group_id': project.sharepoint_group_id,
                 'applications_count': len(project.applications),
                 'created_at': project.created_at.isoformat() if project.created_at else None,
                 'updated_at': project.updated_at.isoformat() if project.updated_at else None
@@ -121,6 +122,7 @@ def get_project(project_id):
             } if project.client else None,
             'sharepoint_site_url': project.sharepoint_site_url,
             'sharepoint_email': project.sharepoint_email,
+            'sharepoint_group_id': project.sharepoint_group_id,
             'applications': applications,
             'created_at': project.created_at.isoformat() if project.created_at else None,
             'updated_at': project.updated_at.isoformat() if project.updated_at else None

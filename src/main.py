@@ -13,20 +13,24 @@ from src.routes.projects import projects_bp
 from src.routes.clients import clients_bp
 from src.routes.applications import applications_bp
 from src.routes.funding_sources import funding_sources_bp
+from src.routes.sharepoint import sharepoint_bp
 # from src.routes.ai_chat import ai_chat_bp  # Temporarily disabled for deployment
 from src.routes.time_tracking import time_tracking_bp
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'housing-pipeline-pro-secret-key-2025')
 
-# Enable CORS for all routes
-CORS(app, origins="*")
+# Enable CORS for all routes with specific origins
+CORS(app, origins=["*", "https://manus-housing-pipeline-frontend-v2.vercel.app", "https://manus-housing-pipeline-frontend.vercel.app"], 
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+     allow_headers=['Content-Type', 'Authorization'])
 
 # Register blueprints
 app.register_blueprint(projects_bp, url_prefix='/api/projects')
 app.register_blueprint(clients_bp, url_prefix='/api/clients')
 app.register_blueprint(applications_bp, url_prefix='/api/applications')
 app.register_blueprint(funding_sources_bp, url_prefix='/api/funding-sources')
+app.register_blueprint(sharepoint_bp, url_prefix='/api/sharepoint')
 # app.register_blueprint(ai_chat_bp, url_prefix='/api/ai')  # Temporarily disabled
 app.register_blueprint(time_tracking_bp, url_prefix='/api/time-tracking')
 

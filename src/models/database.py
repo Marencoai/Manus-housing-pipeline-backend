@@ -46,6 +46,7 @@ class Project(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     sharepoint_site_url = db.Column(db.String(500))
     sharepoint_email = db.Column(db.String(200))
+    sharepoint_group_id = db.Column(db.String(100))  # Microsoft 365 Group ID
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
